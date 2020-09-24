@@ -1,0 +1,47 @@
+{% extends 'groups/group_base.html' %}
+
+{% block pregroup %}
+<div class="col-md-4">
+    <div class="content">
+        {% if user.is_authenticated %}
+        <h3>Delete Page!!</h3>
+        <h2>Admin
+            <a href="#">
+                @{{object.admin.username}}
+            </a>
+        </h2>
+        {% endif %}
+    </div>
+
+    <div class="jumbotron">
+        <ul>
+            <li>
+                <h4>Group Members:-</h4>
+            </li>
+            {% for group_member in  group.members.all %}
+            <li>{{group_member.username}}</li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+
+</div>
+{% endblock %}
+
+{% block group_content %}
+<div class="col-md-8">
+    <div class="list-group">
+        <h1 class="display-1">{{object.name}}</h1>
+        <div class="jumbotron">
+            <h3>Group Description:</h3>
+            <p>{{object.description}}</p>
+        </div>
+            
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Confirm Delete">
+            <a href="{% url 'groups:all_groups' %}" class="btn btn-simple">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
