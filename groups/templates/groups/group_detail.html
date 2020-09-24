@@ -1,0 +1,60 @@
+{% extends 'groups/group_base.html' %}
+
+{% block pregroup %}
+<div class="col-md-4">
+    <div class="content">
+        {% if user.is_authenticated %}
+        <h2>Detail of Group!</h2>
+        <h4>Admin
+            <a href="#">
+                @{{group.admin.username}}
+            </a>
+        </h4>
+        {% endif %}
+        <p>Welcome to the detail groups page!</p>
+
+        {% if user in group.members.all %}
+        {% if user == group.admin %}
+        <p><strong>You are admin</strong></p>
+        <a href="{% url 'groups:group_delete' slug=object.slug %}" class="btn btn-danger">Delete</a>
+        {% else %}
+        <p><strong>You are Group Member</strong></p>
+        {% endif %}
+        <a href="{% url 'groups:group_leave' slug=group.slug %}" class="btn btn-fill btn-warning">Leave</a>
+        {% else %}
+        <a href="{% url 'groups:group_join' slug=group.slug %}" class="btn btn-fill btn-warning">Join</a>
+        {% endif %}        
+    </div>
+
+</div>
+{% endblock %}
+
+{% block group_content %}
+<div class="col-md-8">
+    <div class="list-group">
+        <h1 class="display-1">{{object.name}}</h1>
+        <h5>Admin @{{object.admin.username}}</h5>
+        <time> Created At: {{object.created_at}}</time>
+        <h3>Group Description:</h3>
+        <p>Description: {{object.description}}</p>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <ul>
+                        <li>
+                            <h4>Group Members:-</h4>
+                        </li>
+                        {% for group_member in  group.members.all %}
+                        <li>{{group_member.username}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
