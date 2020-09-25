@@ -1,0 +1,55 @@
+{% extends 'posts/post_base.html' %}
+{% load bootstrap4 %}
+
+{% block prepost %}
+<div class="col-md-4">
+    <div class="jumbotron">
+        <h3>Group Details</h3>
+        <p><strong>Admin:</strong> @{{group.admin.username}}</p>
+        <p><strong>Group:</strong> {{group.name}}</p>
+        <p><strong>Description:</strong> {{group.description}}</p>
+    </div>
+
+    <div class="jumbotron">
+        <h3>Group Members</h3>
+        {% for group_member in group.members.all %}
+        <li>@{{group_member.username}}</li>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+
+{% block post_content %}
+<div class="col-md-8">
+    <h3 class="text-center">Group Chat</h3>
+    <div class="jumbotron">
+        <div class="row">
+
+            <ul>
+                {% for p_list in post_list %}
+                <div class="row p-3">
+
+                    <li>
+                        <h5>@{{p_list.user.username}}</h5>
+                        <p>{{p_list}}</p>
+                        <span>{{p_list.created_at}}</span>
+                        {% if p_list.user.username == user.username %}
+                        <a href="{% url 'posts:post_delete' pk=p_list.pk %}">Delete</a>
+                        {% endif %}
+                    </li>
+                </div>
+
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form post_form %}
+        <input type="submit" value="Post" class="btn btn-primary">
+    </form>
+</div>
+{% endblock %}
