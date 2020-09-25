@@ -23,7 +23,7 @@ class Post(models.Model):
         return reverse('posts:all_post')
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['created_at']
     
     
 
