@@ -1,0 +1,35 @@
+{% extends 'posts/post_base.html' %}
+
+
+{% block prepost %}
+<div class="col-md-4">
+    <div class="jumbotron">
+        <h3>Group Details</h3>
+        <p>{{object.group.name}}</p>
+    </div>
+
+    <div class="jumbotron">
+        <h3>Group Members</h3>
+        {% for group_members in object.group.members.all %}
+        <p>@{{group_members.username}}</p>
+        {% endfor %}
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block post_content %}
+<div class="col-md-8">
+    <div class="list-group">
+        <div class="jumbotron">
+        <h3>Message:</h3>
+        <p>{{object.message}}</p>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Confirm Delete"> 
+        </form>
+        <a href="{% url 'posts:post_create' slug=object.group.slug %}"><button class="btn btn-warning">Cancel</button></a>
+        </div>
+    </div>
+</div>
+{% endblock %}
