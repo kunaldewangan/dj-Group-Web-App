@@ -21,6 +21,7 @@
         <p><strong>You are Group Member</strong></p>
         {% endif %}
         <a href="{% url 'groups:group_leave' slug=group.slug %}" class="btn btn-fill btn-warning">Leave</a>
+        <a href="{% url 'posts:post_create' slug=object.slug %}" class="btn btn-warning">Add Post</a>
         {% else %}
         <a href="{% url 'groups:group_join' slug=group.slug %}" class="btn btn-fill btn-warning">Join</a>
         {% endif %}        

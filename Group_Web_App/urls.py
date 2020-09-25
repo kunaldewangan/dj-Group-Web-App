@@ -25,4 +25,5 @@ urlpatterns = [
     path('main/',views.MainPage.as_view(),name='main'),
     path('thanks/',views.ThanksPage.as_view(),name='thanks'),
     path('groups/',include('groups.urls',namespace='groups')),
+    path('posts/',include('posts.urls',namespace='posts')),
 ]
