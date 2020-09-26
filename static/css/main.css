@@ -1,0 +1,26 @@
+.chat-div
+{
+  height: 400px;
+}
+
+.chat-scroll {
+  
+  height: 390px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: justify;
+}
+
+.chat-group-member
+{
+  height:270px;
+}
+.chat-group-member-scroll
+{
+  height: 270px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: justify;
+}
+
+
