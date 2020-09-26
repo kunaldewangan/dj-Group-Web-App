@@ -3,33 +3,51 @@
 
 {% block prepost %}
 <div class="col-md-4">
-    <div class="jumbotron">
-        <h3>Group Details</h3>
-        <p>{{object.group.name}}</p>
+    <div>
+        <ul class="list-group">
+            <li class="list-group-item active">Group Details</li>
+            <li class="list-group-item"><strong>Admin:</strong> @{{object.group.admin.username}}</li>
+            <li class="list-group-item"><strong>Group:</strong> {{object.group.name}}</li>
+            <li class="list-group-item"><strong>Description:</strong> 
+                <div style="overflow-x: hidden;overflow-y: auto;height:80px;">
+                    {{object.group.description}}
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="pt-3 pb-3">
+        <ul class="list-group">
+            <li class="list-group-item active">Group Members</li>
+            <div class="chat-group-member">
+                <div class="chat-group-member-scroll">
+
+                    {% for group_members in object.group.members.all %}
+                    <li class="list-group-item">@{{group_members.username}}</li>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </ul>
     </div>
 
-    <div class="jumbotron">
-        <h3>Group Members</h3>
-        {% for group_members in object.group.members.all %}
-        <p>@{{group_members.username}}</p>
-        {% endfor %}
-        
-    </div>
 </div>
 {% endblock %}
 
 {% block post_content %}
 <div class="col-md-8">
-    <div class="list-group">
-        <div class="jumbotron">
-        <h3>Message:</h3>
-        <p>{{object.message}}</p>
-        <form method="POST">
-            {% csrf_token %}
-            <input type="submit" class="btn btn-danger" value="Confirm Delete"> 
-        </form>
-        <a href="{% url 'posts:post_create' slug=object.group.slug %}"><button class="btn btn-warning">Cancel</button></a>
-        </div>
+    <div class="p3">
+        <ul class="list-group">
+            <li class="list-group-item bg-warning">Message Delete</li>
+            <div class="jumbotron">
+                    <h3>Message:</h3>
+                    <p>{{object.message}}</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <span><input type="submit" class="btn btn-danger" value="Confirm Delete"></span>
+                    <span><a href="{% url 'posts:post_create' slug=object.group.slug %}" class="btn btn-info">Cancel</a></span>
+                </form>
+            </div>
+        </ul>
     </div>
 </div>
 {% endblock %}

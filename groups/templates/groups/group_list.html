@@ -2,52 +2,84 @@
 
 {% block pregroup %}
 <div class="col-md-4">
-    <div class="content">
-        {% if user.is_authenticated %}
-        <h2>Welcome Back!
-            <a href="#">
-                @{{user.username}}
-            </a>
-        </h2>
-        {% endif %}
-        <h2>Groups</h2>
-        <p>Welcome to the groups page!</p>
+    <div class="content pt-5">
+        <ul class="list-group">
+            <li class="list-group-item active">
+                Welcome Back!
+            </li>
+            {% if user.is_authenticated %}
+            <li class="list-group-item">
+                Hello <a href="#">
+                    @{{user.username}}
+                </a>
+            </li>
+            {% endif %}
+            <li class="list-group-item">Welcome to the Group page!</li>
+            <li class="list-group-item">
+                {% if user.is_authenticated %}
+                <a href="{% url 'groups:group_create' %}" class="btn btn-md btn-fill btn-warning">
+                    <button class="btn btn-warning">Create Group</button>
+                </a>
+                {% endif %}
+
+            </li>
+        </ul>
     </div>
-    {% if user.is_authenticated %}
-    <a href="{% url 'groups:group_create' %}" class="btn btn-md btn-fill btn-warning">
-        <button class="btn btn-warning">Create Group</button>
-    </a>
-    {% endif %}
 
 </div>
 {% endblock %}
 
 {% block group_content %}
 <div class="col-md-8">
-    <h2 class="display-2">Groups Are..</h2>
-    <div class="list-group">
-        {% for group in group_list %}
-        <div class="list-group-item">
+    <div class="pt-5" style="height:200px;">
+        <ul class="list-group">
+            <div style="overflow-x: hidden;overflow-y: auto;height: 500px;">
+                <li class="list-group-item bg-info">
+                    <h2 class="display-2">Groups Are..</h2>
+                </li>
+                <div class="list-group">
+                    {% for group in group_list %}
+                    <div class="list-group-item">
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="{% url 'groups:group_detail' slug=group.slug %}">
+                                    <h3 class="title list-group-item-heading">{{group.name}}</h3>
+                                </a>
+                                <h6>Admin:@{{group.admin.username}}</h6>
 
-            <a href="{% url 'groups:group_detail' slug=group.slug %}">
-                <h3 class="title list-group-item-heading">{{group.name}}</h3></a>
-            <p>Admin @{{group.admin.username}}</p>
-            <div class="list-group-item-text container-fluid">
-                {{group.description}}
-                <div class="row">
-                    <div class="col-md-4">
-                        <span class="badge">{{group.members.count}}</span>
-                        member{{group.members.count|pluralize}}
+                                <time>Created At: {{group.created_at}}</time>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <span class="badge">{{group.members.count}}</span>
+                                        member{{group.members.count|pluralize}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span class="badge">{{group.post_group.count}}</span>
+                                        post{{group.posts.count|pluralize}}
+                                    </div>
+                                </div>
+
+                                <div class="content pt-2 pb-2">
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Group Description</h5>
+                                            <div style="overflow-x: hidden;overflow-y: auto;height: 100px;">
+                                                {{group.description}}
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <span class="badge">{{group.post_group.count}}</span>
-                        post{{group.posts.count|pluralize}}
-                    </div>
+
+                    {% endfor %}
                 </div>
             </div>
-        </div>
-        
-        {% endfor %}
+        </ul>
     </div>
+
 </div>
 {% endblock %}
