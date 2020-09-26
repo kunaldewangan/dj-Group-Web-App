@@ -2,60 +2,86 @@
 
 {% block pregroup %}
 <div class="col-md-4">
-    <div class="content">
-        {% if user.is_authenticated %}
-        <h2>Detail of Group!</h2>
-        <h4>Admin
-            <a href="#">
-                @{{group.admin.username}}
-            </a>
-        </h4>
-        {% endif %}
-        <p>Welcome to the detail groups page!</p>
+    <div class="content pt-5">
+        <ul class="list-group">
+            <li class="list-group-item active">
+                Welcome Back!
+            </li>
+            {% if user.is_authenticated %}
+            <li class="list-group-item">
+                Admin <a href="#">
+                    @{{group.admin.username}}
+                </a>
+            </li>
+            {% endif %}
+            <li class="list-group-item">Welcome to the detail groups page!</li>
+            <li class="list-group-item">
+                {% if user in group.members.all %}
+                {% if user == group.admin %}
+                <p><strong>You are admin</strong></p>
+                <a href="{% url 'groups:group_delete' slug=object.slug %}" class="btn btn-danger">Delete</a>
+                {% else %}
+                <p><strong>You are Group Member</strong></p>
+                {% endif %}
+                <a href="{% url 'groups:group_leave' slug=group.slug %}" class="btn btn-fill btn-warning">Leave</a>
+                <a href="{% url 'posts:post_create' slug=object.slug %}" class="btn btn-warning">Add Post</a>
+                {% else %}
+                <a href="{% url 'groups:group_join' slug=group.slug %}" class="btn btn-fill btn-warning">Join</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
 
-        {% if user in group.members.all %}
-        {% if user == group.admin %}
-        <p><strong>You are admin</strong></p>
-        <a href="{% url 'groups:group_delete' slug=object.slug %}" class="btn btn-danger">Delete</a>
-        {% else %}
-        <p><strong>You are Group Member</strong></p>
-        {% endif %}
-        <a href="{% url 'groups:group_leave' slug=group.slug %}" class="btn btn-fill btn-warning">Leave</a>
-        <a href="{% url 'posts:post_create' slug=object.slug %}" class="btn btn-warning">Add Post</a>
-        {% else %}
-        <a href="{% url 'groups:group_join' slug=group.slug %}" class="btn btn-fill btn-warning">Join</a>
-        {% endif %}        
+    <div class="pt-3 pb-3">
+        <ul class="list-group">
+            <li class="list-group-item active">Group Member</li>
+            <div class="chat-group-member">
+                <div class="chat-group-member-scroll">
+                    {% for group_member in group.members.all %}
+                    <li class="list-group-item">@{{group_member.username}}</li>
+                    {% endfor %}
+                </div>
+            </div>
+        </ul>
     </div>
 
 </div>
 {% endblock %}
+
+
 
 {% block group_content %}
 <div class="col-md-8">
-    <div class="list-group">
-        <h1 class="display-1">{{object.name}}</h1>
-        <h5>Admin @{{object.admin.username}}</h5>
-        <time> Created At: {{object.created_at}}</time>
-        <h3>Group Description:</h3>
-        <p>Description: {{object.description}}</p>
-        
-        <div class="row">
-            <div class="col-md-12">
-                <div class="jumbotron">
-                    <ul>
-                        <li>
-                            <h4>Group Members:-</h4>
-                        </li>
-                        {% for group_member in  group.members.all %}
-                        <li>{{group_member.username}}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="pt-5" style="height: 200px;">
+        <ul class="list-group">
+            <div style="overflow-x: hidden;overflow-y: auto;height: 500px;">
+                <li class="list-group-item bg-info">
+                    <h1 class="display-1">{{object.name}}</h1>
+                </li>
+                <li class="list-group-item">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Admin @{{object.admin.username}}</h4>
+                            <time> Created At: {{object.created_at}}</time>
+                        </div>
+                    </div>
 
+                    <div class="pt-2 pb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="pt-2" style="height: 200px;">
+                                    <h4 class="card-title">Group Description:</h4>
+                                    <div style="overflow-x: hidden;overflow-y: auto;height: 150px;">
+                                        <p>{{object.description}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            </div>
+        </ul>
     </div>
 </div>
-
 {% endblock %}
-
