@@ -16,6 +16,7 @@ class Group(models.Model):
     admin = models.ForeignKey(User,related_name='admin',on_delete=models.CASCADE)
     members = models.ManyToManyField(User,through='GroupMember')
     created_at = models.DateTimeField(auto_now=True)
+    private = models.BooleanField(default=False)
 
 
     def __str__(self):
