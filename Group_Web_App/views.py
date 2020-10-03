@@ -8,6 +8,6 @@ class MainPage(LoginRequiredMixin,TemplateView):
 class ThanksPage(TemplateView):
     template_name = 'thanks.html'
 
-class HomePage(TemplateView):
+class HomePage(LoginRequiredMixin,TemplateView):
     template_name = 'index.html'
 
