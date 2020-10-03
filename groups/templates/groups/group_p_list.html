@@ -1,0 +1,99 @@
+{% extends 'groups/group_base.html' %}
+
+{% block pregroup %}
+<div class="col-md-4">
+    <div class="content pt-5">
+        <ul class="list-group">
+            <li class="list-group-item active">
+                Welcome Back!
+            </li>
+            {% if user.is_authenticated %}
+            <li class="list-group-item">
+                Hello <a href="#">
+                    @{{user.username}}
+                </a>
+            </li>
+            {% endif %}
+            <li class="list-group-item">Welcome to the Private Group page!</li>
+            <li class="list-group-item">
+                {% if user.is_authenticated %}
+                <a href="{% url 'groups:group_create' %}" class="btn btn-md btn-fill btn-warning">
+                    <button class="btn btn-warning">Create Group</button>
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block group_content %}
+<div class="col-md-8">
+    <div class="pt-5" style="height:200px;">
+        <ul class="list-group">
+            <div style="overflow-x: hidden;overflow-y: auto;height: 500px;">
+                <li class="list-group-item bg-info">
+                    <h2 class="display-2">Private Groups</h2>
+                </li>
+                <div class="list-group">
+                    {% if group_list %}
+                    {% for group in group_list %}
+                    <div class="list-group-item">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="list-group-item-heading" style="float: left;">
+                                            <span class="h3"><a href="{% url 'groups:group_detail' slug=group.slug %}">
+                                                    {{group.name}}
+                                                </a></span>
+                                        </div>
+                                        <div>
+                                            <span><small>Private</small></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6>Admin:@{{group.admin.username}}</h6>
+                                <time>Created At: {{group.created_at}}</time>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <span class="badge">{{group.members.count}}</span>
+                                        member{{group.members.count|pluralize}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span class="badge">{{group.post_group.count}}</span>
+                                        chat{{group.posts.count|pluralize}}
+                                    </div>
+                                </div>
+                                <div class="content pt-2 pb-2">
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Group Description</h5>
+                                            <div style="overflow-x: hidden;overflow-y: auto;height: 100px;">
+                                                {{group.description}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                    {% else %}
+                    <div class="list-group-item">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>No Groups Found</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </ul>
+    </div>
+
+</div>
+{% endblock %}
