@@ -1,4 +1,31 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<h1>You are now Logged in!</h1>
+
+<div class="container-fluid">
+    <div class="row ml-5 mt-2">
+        <div class="col-md-12">
+            <h4 class="display-4">You are Logged in</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <img src="{% static 'images/main.jpg' %}" alt="Main">
+        </div>
+        <div class="col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    Welcome to the page!!
+                </li>
+                <li class="list-group-item">
+                    Hello!! @{{user}}
+                </li>
+                <a href="#" class="list-group-item list-group-item-action">Profile</a>
+                <a href="{% url 'groups:private_groups' %}" class="list-group-item list-group-item-action">My Private
+                    Group</a>
+                <a href="{% url 'groups:all_groups' %}" class="list-group-item list-group-item-action">Public Group</a>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

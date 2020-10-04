@@ -1,5 +1,5 @@
 {% extends 'groups/group_base.html' %}
-
+{% load bootstrap4 %}
 {% block pregroup %}
 <div class="col-md-4">
     <div class="content pt-5">
@@ -24,31 +24,74 @@
                 <p><strong>You are Group Member</strong></p>
                 {% endif %}
                 <a href="{% url 'groups:group_leave' slug=group.slug %}" class="btn btn-fill btn-warning">Leave</a>
-                <a href="{% url 'posts:post_create' slug=object.slug %}" class="btn btn-warning">Add Post</a>
+                <a href="{% url 'posts:post_create' slug=object.slug %}" class="btn btn-warning">Chat</a>
                 {% else %}
                 <a href="{% url 'groups:group_join' slug=group.slug %}" class="btn btn-fill btn-warning">Join</a>
                 {% endif %}
             </li>
         </ul>
     </div>
-
-    <div class="pt-3 pb-3">
+    <div class="pt-3 pb-3" style="height: 150px;">
         <ul class="list-group">
-            <li class="list-group-item active">Group Member</li>
-            <div class="chat-group-member">
-                <div class="chat-group-member-scroll">
-                    {% for group_member in group.members.all %}
-                    <li class="list-group-item">@{{group_member.username}}</li>
+
+            <li class="list-group-item active"><span class="h4">Group Members</span>
+                {% if user == group.admin %}
+                <div style="float: right;">
+                    <!--Member Add Popup Model-->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddMember">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+                {% endif %}
+            </li>
+
+            <div style="overflow-x: hidden;overflow-y: auto;height: 150px;">
+                {% for group_member in group.members.all %}
+                    <li class="list-group-item">@{{group_member.username}}
+                        {% if user == group.admin %}
+                        <div style="float: right;">
+                            <a href="{% url 'groups:remove_member' slug=group.slug username=group_member.username %}">
+                                <i class="fa fa-user-times" style="color: black;" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </li>
                     {% endfor %}
+
+            </div>
+            <!-- Popup-Modal -->
+            <div class="modal fade" id="AddMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Member</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{% url 'groups:add_member' slug=group.slug %}" method="POST">
+
+                            <div class="modal-body">
+                                {% csrf_token %}
+                                {% bootstrap_form member_form %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <input type="submit" value="Add" class="btn btn-primary">
+                            </div>
+                        </form>
+
+                    </div>
                 </div>
             </div>
+            <!--Modal end-->
+
         </ul>
     </div>
-
 </div>
+
 {% endblock %}
-
-
 
 {% block group_content %}
 <div class="col-md-8">

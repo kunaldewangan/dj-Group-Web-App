@@ -23,4 +23,16 @@
   text-align: justify;
 }
 
+.group-detail-group-member
+{
+  height:150px;
+}
+.group-detail-group-member-scroll
+{
+  height: 270px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: justify;
+}
+
 
