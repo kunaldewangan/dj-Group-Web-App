@@ -25,7 +25,7 @@ class PrivateListGroups(LoginRequiredMixin,generic.ListView):
 
 class CreateGroup(LoginRequiredMixin,generic.CreateView):
     model = Group
-    fields = ('name','description','private')
+    fields = ('name','link','description','private')
 
     def form_valid(self,form):
         self.object = form.save(commit=False)
