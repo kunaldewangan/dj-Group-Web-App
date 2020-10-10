@@ -12,6 +12,7 @@ register = template.Library()
 class Group(models.Model):
     name = models.CharField(max_length=255,unique=True)
     slug =models.SlugField(allow_unicode=True,unique=True)
+    link = models.CharField(max_length=255,default='')
     description = models.TextField(blank=True,default='')
     admin = models.ForeignKey(User,related_name='admin',on_delete=models.CASCADE)
     members = models.ManyToManyField(User,through='GroupMember')
