@@ -16,7 +16,7 @@
                 <li class="list-group-item">
                     Hello!! @{{user}}
                 </li>
-                <a href="#" class="list-group-item list-group-item-action">Profile</a>
+                <a href="{% url 'accounts:set_my_profile' %}" class="list-group-item list-group-item-action">My Profile</a>
                 <a href="{% url 'groups:private_groups' %}" class="list-group-item list-group-item-action">My Private Group</a>
                 <a href="{% url 'groups:all_groups' %}" class="list-group-item list-group-item-action">Public Group</a>
 
