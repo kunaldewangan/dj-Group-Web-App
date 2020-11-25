@@ -23,7 +23,7 @@ def set_profile(request):
         profile.save()
 
     if request.method == 'POST':
-        profile_form = forms.UserProfileForm(request.POST)
+        profile_form = forms.UserProfileForm(request.POST,request.FILES)
         if profile_form.is_valid():
             profile_update = models.Profile.objects.get(
                 user = request.user
@@ -32,6 +32,11 @@ def set_profile(request):
             profile_update.date_of_birth = profile_form.cleaned_data['date_of_birth']
             profile_update.phone_no = profile_form.cleaned_data['phone_no']
             profile_update.city = profile_form.cleaned_data['city']
+            if request.FILES:
+                profile_update.profile_picture = request.FILES['profile_pic']
+            # else:
+            #     print('Profile pic not selected')
+                
             profile_update.save()
             return HttpResponseRedirect(reverse_lazy('home'))
         else:
