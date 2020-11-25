@@ -15,7 +15,7 @@ class UserCreateForm(UserCreationForm):
         self.fields['email'].label = 'Email Address'
 
 class UserProfileForm(forms.ModelForm):
-
+    profile_pic = forms.ImageField(label='Profile Picture',widget=forms.FileInput,required=False)
     class Meta:
         model = models.Profile
         fields = ('gender','date_of_birth','phone_no','city')
