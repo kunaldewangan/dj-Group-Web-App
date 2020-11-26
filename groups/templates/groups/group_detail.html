@@ -9,7 +9,7 @@
             </li>
             {% if user.is_authenticated %}
             <li class="list-group-item">
-                Admin <a href="#">
+                Admin <a href="{% url 'accounts:show_profile' username=group.admin.username %}">
                     @{{group.admin.username}}
                 </a>
             </li>
@@ -47,7 +47,10 @@
 
             <div style="overflow-x: hidden;overflow-y: auto;height: 150px;">
                 {% for group_member in group.members.all %}
-                    <li class="list-group-item">@{{group_member.username}}
+                    <li class="list-group-item">
+                        <a href="{% url 'accounts:show_profile' username=group_member.username %}">
+                            @{{group_member.username}}
+                        </a>
                         {% if user == group.admin %}
                         <div style="float: right;">
                             <a href="{% url 'groups:remove_member' slug=group.slug username=group_member.username %}">

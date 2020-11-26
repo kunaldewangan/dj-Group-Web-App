@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="row pt-3">
+    <div class="col-md-12">
+        <ul class="list-group">
+            <li class="list-group-item active">
+                <h1>Profile</h1>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4">
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <img src="{{u_profile.profile.profile_picture.url}}" alt="user-image" class="img-thumbnail" width="200" height="200">
+                            </div>
+                            <div class="list-group-item">
+                                <h4>{{u_profile.username}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-6">
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <h5>First Name: {{u_profile.first_name}}</h5>
+                            </div>
+                            <div class="list-group-item">
+                                <h5>Last Name: {{u_profile.last_name}}</h5>
+                            </div>
+                            <div class="list-group-item">
+                                <h5>Email: {{u_profile.email}}</h5>
+                            </div>
+                            <div class="list-group-item">
+                                <h5>Gender: {{u_profile.profile.gender}}</h5>
+                            </div>
+                            <div class="list-group-item">
+                                <h5>DOB: {{u_profile.profile.date_of_birth}}</h5>
+                            </div>
+                            <div class="list-group-item">
+                                <h5>Phone No: {{u_profile.profile.phone_no}}</h5>
+                            </div>
+                            <div class="list-group-item">
+                                <h5>City: {{u_profile.profile.city}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
