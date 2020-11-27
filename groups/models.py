@@ -16,8 +16,8 @@ class Group(models.Model):
     description = models.TextField(blank=True,default='')
     admin = models.ForeignKey(User,related_name='admin',on_delete=models.CASCADE)
     members = models.ManyToManyField(User,through='GroupMember')
-    created_at = models.DateTimeField(auto_now=True)
     private = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now=True)
 
 
     def __str__(self):
@@ -31,15 +31,17 @@ class Group(models.Model):
         return reverse('groups:group_detail', kwargs={"slug": self.slug})
 
     class Meta:
-        ordering = ['name']
+        ordering = ['name','created_at']
     
 
 class GroupMember(models.Model):
     group = models.ForeignKey(Group,related_name='memberships',on_delete=models.CASCADE)
     user = models.ForeignKey(User,related_name='user_groups',on_delete=models.CASCADE)
+    joined_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.username
 
     class Meta:
         unique_together = ('group','user')
+        ordering = ['group__name','user__username','joined_at']
