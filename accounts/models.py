@@ -26,18 +26,23 @@ def user_directory_path(instance, filename):
 class Profile(models.Model):
     user = models.OneToOneField(get_user_model(),on_delete=models.CASCADE,related_name='profile')
     GENDER_CHOICES = [
+        ('-','-'),
         ('M','Male'),
         ('F','Female'),
         ('O','Other')
     ]
-    gender = models.CharField(max_length=6,choices=GENDER_CHOICES,default='')
+    gender = models.CharField(max_length=6,choices=GENDER_CHOICES,default='-')
     date_of_birth = models.DateField(blank=True,null=True)
     phone_no = models.CharField(max_length=12,default='')
     city = models.CharField(max_length=250,default='')
     profile_picture = models.ImageField(upload_to=user_directory_path,default='profile_picture/default_profile.png',blank=True)
+    last_update = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.username
+    
+    class Meta:
+        ordering = ['user__username']
 
 # django-signal
 @receiver(post_save, sender=get_user_model())
