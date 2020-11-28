@@ -19,6 +19,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 
+admin.site.site_header = 'Super Admin'
+admin.site.index_title = "Group-App Super-Admin"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.HomePage.as_view(),name='home'),

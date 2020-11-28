@@ -9,9 +9,9 @@ User = get_user_model()
 
 class Post(models.Model):
     user = models.ForeignKey(User,related_name='post_user',on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now=True)
     message = models.CharField(max_length=255)
     group = models.ForeignKey(Group,related_name='post_group',on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.message
@@ -23,7 +23,7 @@ class Post(models.Model):
         return reverse('posts:all_post')
 
     class Meta:
-        ordering = ['created_at']
+        ordering = ['group__name','created_at']
     
     
 
