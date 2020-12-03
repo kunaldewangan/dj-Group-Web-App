@@ -1,9 +1,13 @@
 {% extends 'groups/group_base.html' %}
+{% load static %}
 {% load bootstrap4 %}
 
 {% block group_content %}
-<div class="col-md-12">
-    <h4>create Group!</h4>
+<div class="col-md-6">
+    <img class="img-fluid" src="{% static 'images/group.png' %}" alt="image" width="550px" height="550px">
+</div>
+<div class="col-md-6 pl-5 pt-3">
+    <h1 class="display-4">Create Group</h4>
     <form action="{% url 'groups:group_create' %}" method="POST">
         {% csrf_token %}
         {% bootstrap_form form %}
