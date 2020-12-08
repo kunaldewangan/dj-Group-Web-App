@@ -12,3 +12,8 @@ six==1.15.0
 soupsieve==2.0.1
 sqlparse==0.3.1
 zipp==3.1.0
+#commands:
+#if you want to include all package name to requirements.txt then type 
+# pip freeze > requirements.txt
+#if install all package from requirements.txt then type
+# pip install -r requirements.txt

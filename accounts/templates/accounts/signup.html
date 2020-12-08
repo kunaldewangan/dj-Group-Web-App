@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load bootstrap4 %}
 
 {% block content %}
 <div class="container">
-    <h1>Sign Up</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <input type="submit" class="btn btn-default" value="Sign Up">
-    </form>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="pt-3 pb-4">
+                <h1 class="display-4">Sign Up</h1>
+                <form method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <input type="submit" class="btn btn-primary" value="Sign Up">
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img class="img-fluid" src="{% static 'images/signup.png' %}" alt="image" width="600px" height="600px">
+        </div>
+    </div>
 </div>
 {% endblock %}
